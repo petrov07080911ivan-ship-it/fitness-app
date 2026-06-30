@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Курс — приложение</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root{
+    --tl:#1D9E75; --tld:#0F6E56;
+    --bg: var(--tg-theme-bg-color,#ffffff);
+    --bg2: var(--tg-theme-secondary-bg-color,#f1f3f2);
+    --tx: var(--tg-theme-text-color,#1c2b29);
+    --tx2: var(--tg-theme-hint-color,#6f7a76);
+    --bd: rgba(128,128,128,.25);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--tx);max-width:480px;margin:0 auto;padding-bottom:74px;-webkit-font-smoothing:antialiased}
+  .ic{width:1.35em;height:1.35em;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.22em}
+  .ab{background:var(--tld);color:#fff;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+  .ab .nm{font-size:16px;font-weight:600}
+  .ab .sb{font-size:12.5px;opacity:.85;margin-top:2px}
+  .scr{padding:16px 16px 8px}
+  .hd{font-size:19px;font-weight:600;margin:2px 0 14px}
+  .card{background:var(--bg2);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+  .mt{font-size:12.5px;color:var(--tx2)}
+  .bar{height:8px;background:var(--bg);border:1px solid var(--bd);border-radius:6px;overflow:hidden;margin-top:9px}
+  .bf{height:100%;background:var(--tl);transition:width .25s}
+  .row{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--bd);border-radius:12px;margin-bottom:9px;background:var(--bg);cursor:pointer}
+  .row.done{background:var(--bg2)}
+  .bx{width:24px;height:24px;border:1.6px solid var(--bd);border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff}
+  .row.done .bx{background:var(--tl);border-color:var(--tl)}
+  .bx .ic{display:none;width:1em;height:1em;stroke-width:2.4}
+  .row.done .bx .ic{display:block}
+  .lb{font-size:15px}
+  .row.done .lb{text-decoration:line-through;color:var(--tx2)}
+  .qt{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--bd)}
+  .qt:last-child{border-bottom:none}
+  .qi{width:40px;height:40px;border-radius:11px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--tld);flex:none}
+  .qi .ic{width:1.3em;height:1.3em}
+  .wb{width:38px;height:38px;border-radius:50%;border:1px solid var(--bd);background:var(--bg);font-size:21px;color:var(--tld);cursor:pointer;line-height:1}
+  .gh{font-size:12.5px;color:var(--tx2);font-weight:600;margin:14px 0 7px}
+  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--bd);border-radius:16px;padding:6px 12px;font-size:13px;margin:0 7px 7px 0}
+  .lnk{color:var(--tld);font-weight:500}
+  .add{width:100%;margin-top:4px;padding:13px;border:1.4px dashed var(--bd);border-radius:12px;background:none;color:var(--tld);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+  .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;
+    display:flex;background:var(--bg);border-top:1px solid var(--bd);z-index:5}
+  .tb{flex:1;background:none;border:none;padding:10px 0 9px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--tx2);cursor:pointer}
+  .tb .ic{width:1.5em;height:1.5em}
+  .tb span{font-size:11px}
+  .tb.on{color:var(--tld)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M5 12l7-7 7 7M6 10v9h12v-9"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 24 24"><path d="M7 8v8M5 6.5v11M17 8v8M19 6.5v11M7 12h10"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M4 11h16a8 8 0 0 1-16 0zM8 11c0-2.5 1.8-4.5 4-4.5"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3.5 5H6l2.2 9.5h8.5L19 7.5H7M9.5 19a1 1 0 1 0 .01 0M16.5 19a1 1 0 1 0 .01 0"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM5 20c0-3.3 3.1-5 7-5s7 1.7 7 5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4 4 10-10"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.5c4 5 6 7 6 10a6 6 0 0 1-12 0c0-3 2-5 6-10z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM18 17H7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 6l10 6-10 6z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
+  <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 3c1 3-1 4-1 6a2 2 0 0 0 4 0c0-1 0-1 0-2 2 2 3 4 3 6a6 6 0 0 1-12 0c0-3 2-4 3-6 1 1 1 2 0 4"/></symbol>
+</svg>
+
+<div class="ab">
+  <div><div class="nm" id="appname">Курс [Зои]</div><div class="sb" id="appsub">Похудение · неделя 1</div></div>
+</div>
+
+<div class="scr">
+
+  <section data-s="today">
+    <div class="hd" id="greet">Привет! Сегодня день 3</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="mt">Прогресс дня</span><span style="font-size:14px;font-weight:600">2 из 4</span></div>
+      <div class="bar"><div class="bf" style="width:50%"></div></div>
+    </div>
+    <div class="card" style="padding:2px 16px">
+      <div class="qt nav-to" data-go="workout"><div class="qi"><svg class="ic"><use href="#i-fit"/></svg></div><div style="flex:1"><div class="lb">Тренировка дня</div><div class="mt">Всё тело · 25 мин</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
+      <div class="qt nav-to" data-go="food"><div class="qi"><svg class="ic"><use href="#i-drop"/></svg></div><div style="flex:1"><div class="lb">Вода</div><div class="mt">4 из 8 стаканов</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
+      <div class="qt nav-to" data-go="food"><div class="qi"><svg class="ic"><use href="#i-book"/></svg></div><div style="flex:1"><div class="lb">Дневник питания</div><div class="mt">2 приёма записано</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
+    </div>
+    <div class="card" style="display:flex;align-items:center;gap:12px"><svg class="ic" style="width:1.6em;height:1.6em;color:var(--tld)"><use href="#i-fire"/></svg><div><div style="font-size:15px;font-weight:600">5 дней подряд</div><div class="mt">Так держать!</div></div></div>
+  </section>
+
+  <section data-s="workout" hidden>
+    <div class="hd">Тренировка дня — всё тело</div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><span class="mt">Выполнено</span><span style="font-size:14px;font-weight:600" id="wkp">0 из 5</span></div><div class="bar"><div class="bf" id="wkbar" style="width:0%"></div></div></div>
+    <div id="wlist">
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Разминка</div><div class="mt">5 минут</div></div></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Приседания</div><div class="mt">3 подхода × 12</div></div></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Отжимания с колен</div><div class="mt">3 подхода × 10</div></div></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Планка</div><div class="mt">3 подхода × 30 сек</div></div></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Растяжка</div><div class="mt">5 минут</div></div></div>
+    </div>
+    <div class="row" style="cursor:default"><svg class="ic" style="color:var(--tld)"><use href="#i-play"/></svg><span class="lb lnk">Смотреть видео техники</span></div>
+  </section>
+
+  <section data-s="food" hidden>
+    <div class="hd">Дневник питания</div>
+    <div class="card"><div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:15px;font-weight:600">Вода сегодня</div><div class="mt"><span id="wn">4</span> из 8 стаканов</div></div>
+      <div style="display:flex;align-items:center;gap:10px"><button class="wb" id="wminus" aria-label="Меньше">−</button><button class="wb" id="wplus" aria-label="Больше">+</button></div></div>
+      <div class="bar"><div class="bf" id="wbar" style="width:50%"></div></div></div>
+    <div class="gh">Сегодня записано</div>
+    <div class="row" style="cursor:default"><div class="qi" style="width:36px;height:36px"><svg class="ic"><use href="#i-food"/></svg></div><div style="flex:1"><div class="lb">Завтрак</div><div class="mt">Овсянка с ягодами · 9:00</div></div></div>
+    <div class="row" style="cursor:default"><div class="qi" style="width:36px;height:36px"><svg class="ic"><use href="#i-food"/></svg></div><div style="flex:1"><div class="lb">Обед</div><div class="mt">Курица с овощами · 14:00</div></div></div>
+    <button class="add" id="addmeal"><svg class="ic"><use href="#i-plus"/></svg> Добавить приём пищи</button>
+  </section>
+
+  <section data-s="shop" hidden>
+    <div class="hd">Список покупок</div>
+    <div class="mt" style="margin-bottom:6px">Отмечайте, что уже купили</div>
+    <div id="slist">
+      <div class="gh">Овощи и фрукты</div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Брокколи</span></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Яблоки</span></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Шпинат</span></div>
+      <div class="gh">Белок</div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Куриное филе</span></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Яйца</span></div>
+      <div class="gh">Крупы</div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Гречка</span></div>
+      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Овсянка</span></div>
+    </div>
+  </section>
+
+  <section data-s="me" hidden>
+    <div class="hd">Мой прогресс</div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><span class="mt">Вес (раз в неделю)</span><span style="font-size:22px;font-weight:600">— кг</span></div><div class="mt" style="margin-top:4px">Взвешивайтесь раз в неделю, в одно время</div></div>
+    <div class="card"><div style="font-size:15px;font-weight:600;margin-bottom:9px">Победы недели</div>
+      <span class="chip">Больше энергии</span><span class="chip">Сплю лучше</span><span class="chip">Меньше тянет на сладкое</span></div>
+    <div class="card" style="display:flex;align-items:center;gap:12px"><svg class="ic" style="width:1.5em;height:1.5em;color:var(--tld)"><use href="#i-fit"/></svg><div><div style="font-size:15px;font-weight:600">Тренировок за неделю: 3 из 3</div><div class="mt">Цифры на весах — не единственный показатель</div></div></div>
+  </section>
+
+</div>
+
+<nav class="nav">
+  <button class="tb on" data-go="today"><svg class="ic"><use href="#i-home"/></svg><span>Сегодня</span></button>
+  <button class="tb" data-go="workout"><svg class="ic"><use href="#i-fit"/></svg><span>Тренировка</span></button>
+  <button class="tb" data-go="food"><svg class="ic"><use href="#i-food"/></svg><span>Питание</span></button>
+  <button class="tb" data-go="shop"><svg class="ic"><use href="#i-cart"/></svg><span>Покупки</span></button>
+  <button class="tb" data-go="me"><svg class="ic"><use href="#i-user"/></svg><span>Я</span></button>
+</nav>
+
+<script>
+  var tg = window.Telegram ? window.Telegram.WebApp : null;
+  if (tg) {
+    tg.ready(); tg.expand();
+    var u = tg.initDataUnsafe && tg.initDataUnsafe.user;
+    if (u && u.first_name) {
+      document.getElementById('greet').textContent = 'Привет, ' + u.first_name + '!';
+    }
+  }
+  var sections = document.querySelectorAll('section[data-s]');
+  var tabs = document.querySelectorAll('.tb');
+  function go(name){
+    sections.forEach(function(s){ s.hidden = (s.dataset.s !== name); });
+    tabs.forEach(function(t){ t.classList.toggle('on', t.dataset.go === name); });
+    window.scrollTo(0,0);
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ go(t.dataset.go); }); });
+  document.querySelectorAll('.nav-to').forEach(function(q){ q.addEventListener('click', function(){ go(q.dataset.go); }); });
+
+  function updWk(){
+    var rows = document.querySelectorAll('#wlist .row');
+    var done = document.querySelectorAll('#wlist .row.done').length;
+    document.getElementById('wkp').textContent = done + ' из ' + rows.length;
+    document.getElementById('wkbar').style.width = Math.round(done/rows.length*100) + '%';
+  }
+  document.querySelectorAll('#wlist .row').forEach(function(r){
+    r.addEventListener('click', function(){ r.classList.toggle('done'); updWk(); });
+  });
+  document.querySelectorAll('#slist .row').forEach(function(r){
+    r.addEventListener('click', function(){ r.classList.toggle('done'); });
+  });
+
+  var wn = 4;
+  function setW(){
+    wn = Math.max(0, Math.min(8, wn));
+    document.getElementById('wn').textContent = wn;
+    document.getElementById('wbar').style.width = Math.round(wn/8*100) + '%';
+  }
+  document.getElementById('wplus').addEventListener('click', function(){ wn++; setW(); });
+  document.getElementById('wminus').addEventListener('click', function(){ wn--; setW(); });
+  document.getElementById('addmeal').addEventListener('click', function(){
+    this.textContent = 'Демо — здесь откроется запись приёма пищи';
+    this.style.color = 'var(--tx2)';
+  });
+</script>
+</body>
+</html>
