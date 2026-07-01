@@ -18,11 +18,14 @@
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     background:var(--bg);color:var(--tx);max-width:480px;margin:0 auto;padding-bottom:74px;-webkit-font-smoothing:antialiased}
   .ic{width:1.35em;height:1.35em;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.22em}
-  .ab{background:var(--tld);color:#fff;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+  .ab{background:var(--tld);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
   .ab .nm{font-size:16px;font-weight:600}
   .ab .sb{font-size:12.5px;opacity:.85;margin-top:2px}
+  .gear{background:none;border:none;color:#fff;cursor:pointer;padding:4px;display:flex}
+  .gear .ic{width:1.55em;height:1.55em}
   .scr{padding:16px 16px 8px}
   .hd{font-size:19px;font-weight:600;margin:2px 0 14px}
+  .hd .ic{cursor:pointer}
   .card{background:var(--bg2);border-radius:14px;padding:14px 16px;margin-bottom:12px}
   .mt{font-size:12.5px;color:var(--tx2)}
   .bar{height:8px;background:var(--bg);border:1px solid var(--bd);border-radius:6px;overflow:hidden;margin-top:9px}
@@ -42,7 +45,6 @@
   .wb{width:38px;height:38px;border-radius:50%;border:1px solid var(--bd);background:var(--bg);font-size:21px;color:var(--tld);cursor:pointer;line-height:1}
   .gh{font-size:12.5px;color:var(--tx2);font-weight:600;margin:14px 0 7px}
   .chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--bd);border-radius:16px;padding:6px 12px;font-size:13px;margin:0 7px 7px 0}
-  .lnk{color:var(--tld);font-weight:500}
   .add{width:100%;margin-top:4px;padding:13px;border:1.4px dashed var(--bd);border-radius:12px;background:none;color:var(--tld);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
   .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;
     display:flex;background:var(--bg);border-top:1px solid var(--bd);z-index:5}
@@ -50,6 +52,26 @@
   .tb .ic{width:1.5em;height:1.5em}
   .tb span{font-size:11px}
   .tb.on{color:var(--tld)}
+  /* settings */
+  .setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--bd)}
+  .setrow:last-child{border-bottom:none}
+  .setrow .l{font-size:15px}
+  .setrow .l small{display:block;color:var(--tx2);font-size:12px;margin-top:2px}
+  .sw{position:relative;width:46px;height:27px;flex:none}
+  .sw input{opacity:0;width:0;height:0;position:absolute}
+  .sw .tr{position:absolute;inset:0;background:var(--bd);border-radius:20px;transition:.2s;cursor:pointer}
+  .sw .tr::before{content:"";position:absolute;width:21px;height:21px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+  .sw input:checked + .tr{background:var(--tl)}
+  .sw input:checked + .tr::before{transform:translateX(19px)}
+  .seg{display:flex;border:1px solid var(--bd);border-radius:9px;overflow:hidden}
+  .seg button{border:none;background:var(--bg);color:var(--tx);padding:7px 14px;font-size:14px;cursor:pointer}
+  .seg button.on{background:var(--tld);color:#fff}
+  .tinput{background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:7px 10px;font-size:15px;color:var(--tx);width:92px;text-align:center}
+  .note{font-size:12.5px;color:var(--tx2);background:var(--bg2);border-radius:10px;padding:11px 13px;margin-top:8px;line-height:1.45}
+  .danger{width:100%;padding:12px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);color:#c0432a;font-size:15px;cursor:pointer}
+  .winput{flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px 12px;font-size:15px;color:var(--tx)}
+  .wbtn2{padding:11px 16px;border:none;border-radius:10px;background:var(--tld);color:#fff;font-size:15px;cursor:pointer;white-space:nowrap}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
@@ -62,14 +84,18 @@
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4 4 10-10"/></symbol>
   <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.5c4 5 6 7 6 10a6 6 0 0 1-12 0c0-3 2-5 6-10z"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
   <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2zM18 17H7"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 6l10 6-10 6z"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
   <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 3c1 3-1 4-1 6a2 2 0 0 0 4 0c0-1 0-1 0-2 2 2 3 4 3 6a6 6 0 0 1-12 0c0-3 2-4 3-6 1 1 1 2 0 4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0"/></symbol>
 </svg>
 
 <div class="ab">
-  <div><div class="nm" id="appname">Курс [Зои]</div><div class="sb" id="appsub">Похудение · неделя 1</div></div>
+  <div><div class="nm" id="appname">Курс [Зои]</div><div class="sb">Похудение · неделя 1</div></div>
+  <button class="gear" id="gearBtn" aria-label="Настройки"><svg class="ic"><use href="#i-gear"/></svg></button>
 </div>
 
 <div class="scr">
@@ -77,35 +103,35 @@
   <section data-s="today">
     <div class="hd" id="greet">Привет! Сегодня день 3</div>
     <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="mt">Прогресс дня</span><span style="font-size:14px;font-weight:600">2 из 4</span></div>
-      <div class="bar"><div class="bf" style="width:50%"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="mt">Прогресс дня</span><span style="font-size:14px;font-weight:600" id="dayp">0 из 5</span></div>
+      <div class="bar"><div class="bf" id="daybar" style="width:0%"></div></div>
     </div>
     <div class="card" style="padding:2px 16px">
       <div class="qt nav-to" data-go="workout"><div class="qi"><svg class="ic"><use href="#i-fit"/></svg></div><div style="flex:1"><div class="lb">Тренировка дня</div><div class="mt">Всё тело · 25 мин</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
-      <div class="qt nav-to" data-go="food"><div class="qi"><svg class="ic"><use href="#i-drop"/></svg></div><div style="flex:1"><div class="lb">Вода</div><div class="mt">4 из 8 стаканов</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
-      <div class="qt nav-to" data-go="food"><div class="qi"><svg class="ic"><use href="#i-book"/></svg></div><div style="flex:1"><div class="lb">Дневник питания</div><div class="mt">2 приёма записано</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
+      <div class="qt nav-to" data-go="food"><div class="qi"><svg class="ic"><use href="#i-drop"/></svg></div><div style="flex:1"><div class="lb">Вода</div><div class="mt" id="waterMini">0 из 8 стаканов</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
+      <div class="qt nav-to" data-go="me"><div class="qi"><svg class="ic"><use href="#i-user"/></svg></div><div style="flex:1"><div class="lb">Мой прогресс</div><div class="mt">Вес и победы недели</div></div><svg class="ic" style="color:var(--tx2)"><use href="#i-chev"/></svg></div>
     </div>
-    <div class="card" style="display:flex;align-items:center;gap:12px"><svg class="ic" style="width:1.6em;height:1.6em;color:var(--tld)"><use href="#i-fire"/></svg><div><div style="font-size:15px;font-weight:600">5 дней подряд</div><div class="mt">Так держать!</div></div></div>
+    <div class="card" style="display:flex;align-items:center;gap:12px"><svg class="ic" style="width:1.6em;height:1.6em;color:var(--tld)"><use href="#i-fire"/></svg><div><div style="font-size:15px;font-weight:600">Так держать!</div><div class="mt">Каждый день — маленький шаг к цели.</div></div></div>
   </section>
 
   <section data-s="workout" hidden>
     <div class="hd">Тренировка дня — всё тело</div>
     <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><span class="mt">Выполнено</span><span style="font-size:14px;font-weight:600" id="wkp">0 из 5</span></div><div class="bar"><div class="bf" id="wkbar" style="width:0%"></div></div></div>
     <div id="wlist">
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Разминка</div><div class="mt">5 минут</div></div></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Приседания</div><div class="mt">3 подхода × 12</div></div></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Отжимания с колен</div><div class="mt">3 подхода × 10</div></div></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Планка</div><div class="mt">3 подхода × 30 сек</div></div></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Растяжка</div><div class="mt">5 минут</div></div></div>
+      <div class="row" data-i="0"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Разминка</div><div class="mt">5 минут</div></div></div>
+      <div class="row" data-i="1"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Приседания</div><div class="mt">3 подхода × 12</div></div></div>
+      <div class="row" data-i="2"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Отжимания с колен</div><div class="mt">3 подхода × 10</div></div></div>
+      <div class="row" data-i="3"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Планка</div><div class="mt">3 подхода × 30 сек</div></div></div>
+      <div class="row" data-i="4"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><div style="flex:1"><div class="lb">Растяжка</div><div class="mt">5 минут</div></div></div>
     </div>
-    <div class="row" style="cursor:default"><svg class="ic" style="color:var(--tld)"><use href="#i-play"/></svg><span class="lb lnk">Смотреть видео техники</span></div>
+    <div class="row" style="cursor:default"><svg class="ic" style="color:var(--tld)"><use href="#i-play"/></svg><span class="lb" style="color:var(--tld)">Смотреть видео техники</span></div>
   </section>
 
   <section data-s="food" hidden>
     <div class="hd">Дневник питания</div>
-    <div class="card"><div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:15px;font-weight:600">Вода сегодня</div><div class="mt"><span id="wn">4</span> из 8 стаканов</div></div>
+    <div class="card"><div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:15px;font-weight:600">Вода сегодня</div><div class="mt"><span id="wn">0</span> из <span id="wgoal">8</span> стаканов</div></div>
       <div style="display:flex;align-items:center;gap:10px"><button class="wb" id="wminus" aria-label="Меньше">−</button><button class="wb" id="wplus" aria-label="Больше">+</button></div></div>
-      <div class="bar"><div class="bf" id="wbar" style="width:50%"></div></div></div>
+      <div class="bar"><div class="bf" id="wbar" style="width:0%"></div></div></div>
     <div class="gh">Сегодня записано</div>
     <div class="row" style="cursor:default"><div class="qi" style="width:36px;height:36px"><svg class="ic"><use href="#i-food"/></svg></div><div style="flex:1"><div class="lb">Завтрак</div><div class="mt">Овсянка с ягодами · 9:00</div></div></div>
     <div class="row" style="cursor:default"><div class="qi" style="width:36px;height:36px"><svg class="ic"><use href="#i-food"/></svg></div><div style="flex:1"><div class="lb">Обед</div><div class="mt">Курица с овощами · 14:00</div></div></div>
@@ -117,24 +143,70 @@
     <div class="mt" style="margin-bottom:6px">Отмечайте, что уже купили</div>
     <div id="slist">
       <div class="gh">Овощи и фрукты</div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Брокколи</span></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Яблоки</span></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Шпинат</span></div>
+      <div class="row" data-i="0"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Брокколи</span></div>
+      <div class="row" data-i="1"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Яблоки</span></div>
+      <div class="row" data-i="2"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Шпинат</span></div>
       <div class="gh">Белок</div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Куриное филе</span></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Яйца</span></div>
+      <div class="row" data-i="3"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Куриное филе</span></div>
+      <div class="row" data-i="4"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Яйца</span></div>
       <div class="gh">Крупы</div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Гречка</span></div>
-      <div class="row"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Овсянка</span></div>
+      <div class="row" data-i="5"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Гречка</span></div>
+      <div class="row" data-i="6"><span class="bx"><svg class="ic"><use href="#i-check"/></svg></span><span class="lb">Овсянка</span></div>
     </div>
   </section>
 
   <section data-s="me" hidden>
     <div class="hd">Мой прогресс</div>
-    <div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline"><span class="mt">Вес (раз в неделю)</span><span style="font-size:22px;font-weight:600">— кг</span></div><div class="mt" style="margin-top:4px">Взвешивайтесь раз в неделю, в одно время</div></div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:600;margin-bottom:2px">Вес</div>
+      <div class="mt" style="margin-bottom:10px">Записывай раз в неделю, в одно время</div>
+      <div style="display:flex;gap:8px">
+        <input class="winput" id="weightIn" type="number" inputmode="decimal" placeholder="Напр. 70.5" step="0.1">
+        <button class="wbtn2" id="weightAdd">Записать</button>
+      </div>
+      <div id="chartBox" style="margin-top:14px"></div>
+      <div id="weightList"></div>
+    </div>
     <div class="card"><div style="font-size:15px;font-weight:600;margin-bottom:9px">Победы недели</div>
       <span class="chip">Больше энергии</span><span class="chip">Сплю лучше</span><span class="chip">Меньше тянет на сладкое</span></div>
-    <div class="card" style="display:flex;align-items:center;gap:12px"><svg class="ic" style="width:1.5em;height:1.5em;color:var(--tld)"><use href="#i-fit"/></svg><div><div style="font-size:15px;font-weight:600">Тренировок за неделю: 3 из 3</div><div class="mt">Цифры на весах — не единственный показатель</div></div></div>
+    <div class="card"><div class="mt">Цифры на весах — не единственный показатель. Энергия, сон и настроение важны не меньше.</div></div>
+  </section>
+
+  <section data-s="settings" hidden>
+    <div class="hd"><svg class="ic" id="setBack" style="vertical-align:-.2em;margin-right:8px"><use href="#i-back"/></svg>Настройки</div>
+
+    <div class="gh">Профиль</div>
+    <div class="card" style="padding:2px 16px">
+      <div class="setrow"><div class="l">Имя<small id="setName">—</small></div></div>
+      <div class="setrow"><div class="l">Цель курса<small>Похудение</small></div></div>
+    </div>
+
+    <div class="gh">Уведомления</div>
+    <div class="card" style="padding:2px 16px">
+      <div class="setrow"><div class="l">Утреннее приветствие</div><label class="sw"><input type="checkbox" data-n="morning"><span class="tr"></span></label></div>
+      <div class="setrow"><div class="l">Напоминание про воду</div><label class="sw"><input type="checkbox" data-n="water"><span class="tr"></span></label></div>
+      <div class="setrow"><div class="l">Напоминание про тренировку</div><label class="sw"><input type="checkbox" data-n="workout"><span class="tr"></span></label></div>
+      <div class="setrow"><div class="l">Еженедельное взвешивание</div><label class="sw"><input type="checkbox" data-n="weighin"><span class="tr"></span></label></div>
+      <div class="setrow"><div class="l">Время напоминаний</div><input class="tinput" id="notifTime" type="time"></div>
+    </div>
+    <div class="note"><svg class="ic" style="width:1em;height:1em"><use href="#i-bell"/></svg> Уведомления присылает бот в Telegram. Эти настройки сохраняются и заработают, когда подключим сервер.</div>
+
+    <div class="gh" style="margin-top:16px">Цель по воде</div>
+    <div class="card" style="padding:2px 16px">
+      <div class="setrow"><div class="l">Стаканов в день</div>
+        <div style="display:flex;align-items:center;gap:12px"><button class="wb" id="wgMinus">−</button><span id="wgVal" style="font-size:16px;font-weight:600;min-width:20px;text-align:center">8</span><button class="wb" id="wgPlus">+</button></div></div>
+    </div>
+
+    <div class="gh" style="margin-top:16px">Единицы веса</div>
+    <div class="card" style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center">
+      <div class="l" style="font-size:15px">Показывать вес в</div>
+      <div class="seg" id="unitSeg"><button data-u="kg" class="on">кг</button><button data-u="lb">фунты</button></div>
+    </div>
+
+    <div class="gh" style="margin-top:16px">Данные</div>
+    <button class="danger" id="resetBtn">Сбросить прогресс</button>
+    <div class="note">Очистит галочки, воду, вес и настройки на этом устройстве.</div>
+    <div style="height:10px"></div>
   </section>
 
 </div>
@@ -148,14 +220,51 @@
 </nav>
 
 <script>
+(function(){
   var tg = window.Telegram ? window.Telegram.WebApp : null;
-  if (tg) {
-    tg.ready(); tg.expand();
-    var u = tg.initDataUnsafe && tg.initDataUnsafe.user;
-    if (u && u.first_name) {
-      document.getElementById('greet').textContent = 'Привет, ' + u.first_name + '!';
-    }
+  if (tg){ try{ tg.ready(); tg.expand(); }catch(e){} }
+
+  // ---------- состояние + сохранение на устройстве ----------
+  var KEY = "zoyaCourseV1";
+  var defaults = {
+    water:0, workout:{}, shop:{}, weights:[],
+    settings:{ waterGoal:8, units:"kg", notifTime:"09:00",
+               notif:{morning:true, water:true, workout:true, weighin:true} }
+  };
+  var state = JSON.parse(JSON.stringify(defaults));
+  function load(){
+    try{
+      var s = localStorage.getItem(KEY);
+      if(s){
+        var p = JSON.parse(s);
+        state.water = p.water || 0;
+        state.workout = p.workout || {};
+        state.shop = p.shop || {};
+        state.weights = p.weights || [];
+        var ps = p.settings || {};
+        state.settings.waterGoal = ps.waterGoal || 8;
+        state.settings.units = ps.units || "kg";
+        state.settings.notifTime = ps.notifTime || "09:00";
+        var pn = ps.notif || {};
+        state.settings.notif = {
+          morning: pn.morning !== false, water: pn.water !== false,
+          workout: pn.workout !== false, weighin: pn.weighin !== false
+        };
+      }
+    }catch(e){}
   }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+  load();
+
+  // ---------- имя из Telegram ----------
+  var uname = "друг";
+  if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.first_name){
+    uname = tg.initDataUnsafe.user.first_name;
+    document.getElementById('greet').textContent = 'Привет, ' + uname + '!';
+  }
+  document.getElementById('setName').textContent = uname;
+
+  // ---------- навигация ----------
   var sections = document.querySelectorAll('section[data-s]');
   var tabs = document.querySelectorAll('.tb');
   function go(name){
@@ -165,32 +274,134 @@
   }
   tabs.forEach(function(t){ t.addEventListener('click', function(){ go(t.dataset.go); }); });
   document.querySelectorAll('.nav-to').forEach(function(q){ q.addEventListener('click', function(){ go(q.dataset.go); }); });
+  document.getElementById('gearBtn').addEventListener('click', function(){ go('settings'); });
+  document.getElementById('setBack').addEventListener('click', function(){ go('today'); });
 
-  function updWk(){
-    var rows = document.querySelectorAll('#wlist .row');
-    var done = document.querySelectorAll('#wlist .row.done').length;
-    document.getElementById('wkp').textContent = done + ' из ' + rows.length;
-    document.getElementById('wkbar').style.width = Math.round(done/rows.length*100) + '%';
+  // ---------- тренировка ----------
+  var wRows = document.querySelectorAll('#wlist .row');
+  function renderWorkout(){
+    var done = 0;
+    wRows.forEach(function(r){
+      var on = !!state.workout[r.dataset.i];
+      r.classList.toggle('done', on);
+      if(on) done++;
+    });
+    document.getElementById('wkp').textContent = done + ' из ' + wRows.length;
+    document.getElementById('wkbar').style.width = Math.round(done/wRows.length*100) + '%';
+    document.getElementById('dayp').textContent = done + ' из ' + wRows.length;
+    document.getElementById('daybar').style.width = Math.round(done/wRows.length*100) + '%';
   }
-  document.querySelectorAll('#wlist .row').forEach(function(r){
-    r.addEventListener('click', function(){ r.classList.toggle('done'); updWk(); });
-  });
-  document.querySelectorAll('#slist .row').forEach(function(r){
-    r.addEventListener('click', function(){ r.classList.toggle('done'); });
+  wRows.forEach(function(r){
+    r.addEventListener('click', function(){
+      state.workout[r.dataset.i] = !state.workout[r.dataset.i];
+      save(); renderWorkout();
+    });
   });
 
-  var wn = 4;
-  function setW(){
-    wn = Math.max(0, Math.min(8, wn));
-    document.getElementById('wn').textContent = wn;
-    document.getElementById('wbar').style.width = Math.round(wn/8*100) + '%';
+  // ---------- покупки ----------
+  var sRows = document.querySelectorAll('#slist .row');
+  function renderShop(){ sRows.forEach(function(r){ r.classList.toggle('done', !!state.shop[r.dataset.i]); }); }
+  sRows.forEach(function(r){
+    r.addEventListener('click', function(){
+      state.shop[r.dataset.i] = !state.shop[r.dataset.i];
+      save(); renderShop();
+    });
+  });
+
+  // ---------- вода ----------
+  function renderWater(){
+    var goal = state.settings.waterGoal;
+    if(state.water > goal) state.water = goal;
+    document.getElementById('wn').textContent = state.water;
+    document.getElementById('wgoal').textContent = goal;
+    document.getElementById('wbar').style.width = Math.round(state.water/goal*100) + '%';
+    document.getElementById('waterMini').textContent = state.water + ' из ' + goal + ' стаканов';
   }
-  document.getElementById('wplus').addEventListener('click', function(){ wn++; setW(); });
-  document.getElementById('wminus').addEventListener('click', function(){ wn--; setW(); });
+  document.getElementById('wplus').addEventListener('click', function(){ if(state.water < state.settings.waterGoal){ state.water++; save(); renderWater(); } });
+  document.getElementById('wminus').addEventListener('click', function(){ if(state.water > 0){ state.water--; save(); renderWater(); } });
   document.getElementById('addmeal').addEventListener('click', function(){
-    this.textContent = 'Демо — здесь откроется запись приёма пищи';
-    this.style.color = 'var(--tx2)';
+    this.textContent = 'Демо — здесь откроется запись приёма пищи'; this.style.color = 'var(--tx2)';
   });
+
+  // ---------- вес + график ----------
+  function fmtDate(d){ var p=function(n){return (n<10?'0':'')+n;}; return p(d.getDate())+'.'+p(d.getMonth()+1); }
+  function drawChart(){
+    var box = document.getElementById('chartBox');
+    var w = state.weights;
+    if(w.length < 2){ box.innerHTML = '<div class="mt">Добавь минимум две записи — и здесь появится график.</div>'; return; }
+    var W=300, H=120, pad=24;
+    var vals = w.map(function(x){return x.kg;});
+    var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+    if(min===max){ min-=1; max+=1; }
+    var n = w.length;
+    var px = function(i){ return pad + i*(W-2*pad)/(n-1); };
+    var py = function(v){ return pad + (max-v)*(H-2*pad)/(max-min); };
+    var pts = w.map(function(x,i){ return px(i)+','+py(x.kg); }).join(' ');
+    var dots = w.map(function(x,i){ return '<circle cx="'+px(i)+'" cy="'+py(x.kg)+'" r="3.5" fill="var(--tld)"/>'; }).join('');
+    box.innerHTML =
+      '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto">'+
+      '<polyline points="'+pts+'" fill="none" stroke="var(--tl)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+
+      dots+
+      '<text x="'+pad+'" y="12" font-size="11" fill="var(--tx2)">'+max.toFixed(1)+' кг</text>'+
+      '<text x="'+pad+'" y="'+H+'" font-size="11" fill="var(--tx2)">'+min.toFixed(1)+' кг</text>'+
+      '</svg>';
+  }
+  function renderWeights(){
+    var el = document.getElementById('weightList');
+    var w = state.weights.slice(-5).reverse();
+    if(w.length===0){ el.innerHTML=''; drawChart(); return; }
+    el.innerHTML = '<div class="gh">История</div>' + w.map(function(x){
+      return '<div class="setrow"><div class="l">'+x.date+'</div><div style="font-weight:600">'+x.kg.toFixed(1)+' кг</div></div>';
+    }).join('');
+    drawChart();
+  }
+  document.getElementById('weightAdd').addEventListener('click', function(){
+    var v = parseFloat((document.getElementById('weightIn').value||'').replace(',','.'));
+    if(isNaN(v) || v<=0){ return; }
+    state.weights.push({ date: fmtDate(new Date()), kg: v });
+    document.getElementById('weightIn').value='';
+    save(); renderWeights();
+  });
+
+  // ---------- настройки ----------
+  document.querySelectorAll('.sw input[data-n]').forEach(function(inp){
+    inp.checked = state.settings.notif[inp.dataset.n];
+    inp.addEventListener('change', function(){ state.settings.notif[inp.dataset.n] = inp.checked; save(); });
+  });
+  var nt = document.getElementById('notifTime');
+  nt.value = state.settings.notifTime;
+  nt.addEventListener('change', function(){ state.settings.notifTime = nt.value || "09:00"; save(); });
+
+  function renderWaterGoal(){ document.getElementById('wgVal').textContent = state.settings.waterGoal; }
+  document.getElementById('wgPlus').addEventListener('click', function(){ if(state.settings.waterGoal<15){ state.settings.waterGoal++; save(); renderWaterGoal(); renderWater(); } });
+  document.getElementById('wgMinus').addEventListener('click', function(){ if(state.settings.waterGoal>1){ state.settings.waterGoal--; save(); renderWaterGoal(); renderWater(); } });
+
+  document.querySelectorAll('#unitSeg button').forEach(function(b){
+    b.classList.toggle('on', b.dataset.u === state.settings.units);
+    b.addEventListener('click', function(){
+      state.settings.units = b.dataset.u;
+      document.querySelectorAll('#unitSeg button').forEach(function(x){ x.classList.toggle('on', x===b); });
+      save();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(!confirm('Сбросить весь прогресс на этом устройстве?')) return;
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    state = JSON.parse(JSON.stringify(defaults));
+    renderAll(); go('today');
+  });
+
+  // ---------- первичная отрисовка ----------
+  function renderAll(){
+    renderWorkout(); renderShop(); renderWater(); renderWeights();
+    renderWaterGoal();
+    document.querySelectorAll('.sw input[data-n]').forEach(function(inp){ inp.checked = state.settings.notif[inp.dataset.n]; });
+    document.getElementById('notifTime').value = state.settings.notifTime;
+    document.querySelectorAll('#unitSeg button').forEach(function(b){ b.classList.toggle('on', b.dataset.u === state.settings.units); });
+  }
+  renderAll();
+})();
 </script>
 </body>
 </html>
